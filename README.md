@@ -3,6 +3,27 @@
 (cd docker; docker build -t puppeteer-chrome-linux .)
 ```
 
+## Example index.js
+
+```
+'use strict';
+
+const screenshot = require('./src/screenshot');
+screenshot.userPages = [
+		{ url: 'https://www.example.com' },
+];
+screenshot.run();
+
+```
+
+## Take screenshots
+
+Update index.js with your Options. Then run:
+
+```
+docker run -i -v ${PWD}:${PWD} -w $PWD --init --rm --cap-add=SYS_ADMIN --name puppeteer-chrome puppeteer-chrome-linux node -e "`cat src/index.js`"
+```
+
 ## Options
 
 Pages that you want to capture.
@@ -65,10 +86,3 @@ The program will wait for the network to be idle but it also waits 3 seconds bet
 screenshots.defaultDelay = 1000; // 1 second now
 ```
 
-## Take screenshots
-
-Update index.js with your Options. Then run:
-
-```
-docker run -i -v ${PWD}:${PWD} -w $PWD --init --rm --cap-add=SYS_ADMIN --name puppeteer-chrome puppeteer-chrome-linux node -e "`cat src/index.js`"
-```
